@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: spring-starter
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/starter
+    username: postgres
+    password: admin
+    jpa:
+      hibernate:
+        ddl-auto: update
