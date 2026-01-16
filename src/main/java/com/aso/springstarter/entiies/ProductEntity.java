@@ -2,8 +2,11 @@ package com.aso.springstarter.entiies;
 
 import java.util.UUID;
 
+import com.aso.springstarter.dtos.ProductResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -20,6 +23,7 @@ import lombok.Setter;
 public class ProductEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
@@ -34,5 +38,11 @@ public class ProductEntity {
 
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
+
+    // status AVAILABLE, HOLD, OUT_OF_STOCK
+
+    public ProductResponse toDto() {
+        return new ProductResponse(id, name, description, price, stockQuantity);
+    }
 
 }
