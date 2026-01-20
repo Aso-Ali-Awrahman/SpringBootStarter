@@ -10,13 +10,14 @@ import com.aso.springstarter.entiies.ProductEntity;
 import com.aso.springstarter.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
-@Service
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
+    // userRepository
 
     @Override
     public List<ProductResponse> getAllProducts() {
@@ -28,10 +29,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public ProductResponse getProduct(UUID productId) {
-        final var product = productRepository.findById(productId).orElse(null);
-        if (product == null) {
-            return null;
-        }
+        final var product = productRepository.findById(productId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+
         return product.toDto();
     }
 
@@ -53,11 +53,7 @@ public class ProductServiceImpl implements ProductService{
     @Transactional
     public void updateProduct(UUID productId, ProductRequest request) {
         final var product = productRepository.findById(productId)
-            .orElse(null);
-        if (product == null) {
-            // exception
-            return;
-        }
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
@@ -70,11 +66,7 @@ public class ProductServiceImpl implements ProductService{
     @Transactional
     public void updateProductStock(UUID productId, ProductStockRequest request) {
         final var product = productRepository.findById(productId)
-            .orElse(null);
-        if (product == null) {
-            // exception
-            return;
-        }
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
         product.setStockQuantity(product.getStockQuantity() + request.getQuantity());
         productRepository.save(product);
     }
