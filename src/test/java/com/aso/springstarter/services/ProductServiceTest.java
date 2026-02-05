@@ -104,6 +104,57 @@ class ProductServiceTest {
         softly.assertThat(productService.count).isEqualTo(1);
     }
 
+    @Test
+    void shouldNotUpdateProductDueNotFound(SoftAssertions soflty) {
+        // given
+        final var productService = new TestProductService(true, 0);
+        final var request = new ProductRequest("P2", "D1", 100.0, 50);
+
+        // when
+        productService.updateProduct(PRODUCT_ID_1, request);
+
+        // then
+        soflty.assertThat(productService.count).isEqualTo(0);
+    }
+
+    @Test
+    void shouldUpdateProductStockById(SoftAssertions softly) {
+        // given
+        final var productService = new TestProductService(false, 0);
+        final var request = new ProductStockRequest(50);
+
+        // when
+        productService.updateProductStock(PRODUCT_ID_1, request);
+
+        // then
+        softly.assertThat(productService.count).isEqualTo(1);
+    }
+
+    @Test
+    void shouldNotUpdateProductStockDueNotFound(SoftAssertions soflty) {
+        // given
+        final var productService = new TestProductService(true, 0);
+        final var request = new ProductStockRequest(50);
+
+        // when
+        productService.updateProductStock(PRODUCT_ID_1, request);
+
+        // then
+        soflty.assertThat(productService.count).isEqualTo(0);
+    }
+
+    @Test
+    void shouldDeleteProductById(SoftAssertions softly) {
+        // given
+        final var productService = new TestProductService(false, 0);
+
+        // when
+        productService.deleteProduct(PRODUCT_ID_1);
+
+        // then
+        softly.assertThat(productService.count).isEqualTo(1);
+    }
+
     @AllArgsConstructor
     static final class TestProductService implements ProductService {
 

@@ -32,14 +32,14 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping(value = "/api/products")
+    @GetMapping(value = "/protected/products")
     @Operation(summary = "Get all products")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<ProductResponse>> getProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    @GetMapping(value = "/api/products/{productId}")
+    @GetMapping(value = "/protected/products/{productId}")
     @Operation(summary = "Get product based on ID")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ProductResponse> getProduct(@PathVariable UUID productId) {
@@ -50,27 +50,27 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    @PostMapping("/api/products")
+    @PostMapping("/protected/products")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest request) {
         return ResponseEntity.ok(productService.createProduct(request));
     }
 
-    @PutMapping("/api/products/{productId}")
+    @PutMapping("/protected/products/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> updateProduct(@PathVariable UUID productId, @Valid @RequestBody ProductRequest request) {
         productService.updateProduct(productId, request);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/api/products/{productId}/stock")
+    @PatchMapping("/protected/products/{productId}/stock")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> updateProductStock(@PathVariable UUID productId, @Valid @RequestBody ProductStockRequest request) {
         productService.updateProductStock(productId, request);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/api/products/{productId}")
+    @DeleteMapping("/protected/products/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId) {
         productService.deleteProduct(productId);
