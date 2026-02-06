@@ -1,4 +1,4 @@
-package com.aso.springstarter.dtos;
+package com.aso.springstarter.dtos.product;
 
 import lombok.Value;
 import org.hibernate.validator.constraints.Range;

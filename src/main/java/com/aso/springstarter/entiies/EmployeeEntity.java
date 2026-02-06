@@ -3,6 +3,7 @@ package com.aso.springstarter.entiies;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.aso.springstarter.dtos.employee.EmployeeResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,7 +41,7 @@ public class EmployeeEntity {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private BackofficeUserRole role;
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
@@ -51,5 +52,11 @@ public class EmployeeEntity {
 
     // status ACTIVE, BLOCKED
     // phonenumber
+
+    public EmployeeResponse toDto() {
+        return new EmployeeResponse(
+            id, fullName, email, role, gender, createdAt
+        );
+    }
 
 }

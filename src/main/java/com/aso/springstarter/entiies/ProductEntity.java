@@ -2,7 +2,7 @@ package com.aso.springstarter.entiies;
 
 import java.util.UUID;
 
-import com.aso.springstarter.dtos.ProductResponse;
+import com.aso.springstarter.dtos.product.ProductResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

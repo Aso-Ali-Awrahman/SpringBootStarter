@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.aso.springstarter.IntegrationTestBase;
-import com.aso.springstarter.dtos.ProductRequest;
-import com.aso.springstarter.dtos.ProductResponse;
-import com.aso.springstarter.dtos.ProductStockRequest;
+import com.aso.springstarter.dtos.product.ProductRequest;
+import com.aso.springstarter.dtos.product.ProductResponse;
+import com.aso.springstarter.dtos.product.ProductStockRequest;
 import com.aso.springstarter.services.ProductService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

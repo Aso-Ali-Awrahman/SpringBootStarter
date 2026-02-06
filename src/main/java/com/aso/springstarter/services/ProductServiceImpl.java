@@ -3,9 +3,9 @@ package com.aso.springstarter.services;
 import java.util.List;
 import java.util.UUID;
 
-import com.aso.springstarter.dtos.ProductRequest;
-import com.aso.springstarter.dtos.ProductResponse;
-import com.aso.springstarter.dtos.ProductStockRequest;
+import com.aso.springstarter.dtos.product.ProductRequest;
+import com.aso.springstarter.dtos.product.ProductResponse;
+import com.aso.springstarter.dtos.product.ProductStockRequest;
 import com.aso.springstarter.entiies.ProductEntity;
 import com.aso.springstarter.repositories.ProductRepository;
 import jakarta.transaction.Transactional;

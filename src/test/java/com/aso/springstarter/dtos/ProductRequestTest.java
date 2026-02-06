@@ -1,6 +1,7 @@
 package com.aso.springstarter.dtos;
 
 import com.aso.springstarter.ValidationTestBase;
+import com.aso.springstarter.dtos.product.ProductRequest;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
