@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.aso.springstarter.dtos.employee.CreateEmployeeRequest;
 import com.aso.springstarter.dtos.employee.EmployeeResponse;
+import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
 
 public interface EmployeeService {
@@ -16,5 +17,9 @@ public interface EmployeeService {
     void createEmployee(CreateEmployeeRequest request);
 
     void updateEmployee(UUID id, UpdateEmployeeRequest request);
+
+    void deleteEmployee(UUID id);
+
+    void resetPassword(UUID id, UpdateEmployeePassword request);
 
 }

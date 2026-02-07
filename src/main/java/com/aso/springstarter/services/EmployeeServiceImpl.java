@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.aso.springstarter.dtos.employee.CreateEmployeeRequest;
 import com.aso.springstarter.dtos.employee.EmployeeResponse;
+import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
 import com.aso.springstarter.entiies.EmployeeEntity;
 import com.aso.springstarter.repositories.EmployeeRepository;
@@ -55,6 +56,23 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employee.setEmail(request.getEmail());
                 employee.setRole(request.getRole());
 
+                return employeeRepository.save(employee);
+            })
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
+    }
+
+    @Override
+    @Transactional
+    public void deleteEmployee(UUID id) {
+        employeeRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(UUID id, UpdateEmployeePassword request) {
+        employeeRepository.findById(id)
+            .map(employee -> {
+                employee.setPassword(request.getNewPassword());
                 return employeeRepository.save(employee);
             })
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));

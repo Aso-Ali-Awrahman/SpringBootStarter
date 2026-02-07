@@ -1,13 +1,9 @@
-package com.aso.springstarter.dtos;
+package com.aso.springstarter.dtos.product;
 
 import com.aso.springstarter.ValidationTestBase;
-import com.aso.springstarter.dtos.product.ProductRequest;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(SoftAssertionsExtension.class)
 class ProductRequestTest extends ValidationTestBase {
 
     @Test
@@ -27,6 +23,11 @@ class ProductRequestTest extends ValidationTestBase {
 
         softly.assertThat(violations).isNotEmpty();
         softly.assertThat(violations).hasSize(4);
+        softly.assertThat(violations)
+            .anyMatch(v -> v.getMessage().equals("Name is required"))
+            .anyMatch(v -> v.getMessage().equals("Description is required"))
+            .anyMatch(v -> v.getMessage().equals("Price must be positive"))
+            .anyMatch(v -> v.getMessage().equals("Stock quantity must be positive"));
     }
 
 }
