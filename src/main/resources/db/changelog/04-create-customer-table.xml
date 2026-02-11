@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="04-create-customer-table" author="aso.ali"
+               logicalFilePath="04-create-customer-table.xml">
+
+        <createTable schemaName="user_management" tableName="customer">
+            <column name="id" type="uuid" defaultValue="uuid_generate_v4()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(20)"/>
+            <column name="last_name" type="varchar(20)"/>
+            <column name="email" type="varchar(50)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(50)"/>
+            <column name="phone_number" type="varchar(11)">
+                <constraints unique="true"/>
+            </column>
+            <column name="gender" type="varchar(6)"/>
+            <column name="created_at" type="timestamp"/>
+        </createTable>
+
+        <sql>
+            ALTER TABLE user_management.customer ADD CONSTRAINT "uq_first_name_last_name" unique(first_name, last_name);
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>
