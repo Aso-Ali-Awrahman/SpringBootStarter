@@ -3,6 +3,7 @@ package com.aso.springstarter.entiies;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.aso.springstarter.dtos.customer.CustomerResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -50,5 +51,9 @@ public class CustomerEntity {
 
     @Column(name = "created_at")
     private Instant createdAt;
+
+    public CustomerResponse toDto() {
+        return new CustomerResponse(id, firstName, lastName, email, phoneNumber, gender, createdAt);
+    }
 
 }

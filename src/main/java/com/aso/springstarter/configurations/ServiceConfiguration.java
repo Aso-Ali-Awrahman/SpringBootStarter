@@ -1,7 +1,10 @@
 package com.aso.springstarter.configurations;
 
+import com.aso.springstarter.repositories.CustomerRepository;
 import com.aso.springstarter.repositories.EmployeeRepository;
 import com.aso.springstarter.repositories.ProductRepository;
+import com.aso.springstarter.services.CustomerService;
+import com.aso.springstarter.services.CustomerServiceImpl;
 import com.aso.springstarter.services.EmployeeService;
 import com.aso.springstarter.services.EmployeeServiceImpl;
 import com.aso.springstarter.services.ProductService;
@@ -20,6 +23,11 @@ public class ServiceConfiguration {
     @Bean
     EmployeeService employeeService(EmployeeRepository employeeRepository){
         return new EmployeeServiceImpl(employeeRepository);
+    }
+
+    @Bean
+    CustomerService customerService(CustomerRepository customerRepository) {
+        return new CustomerServiceImpl(customerRepository);
     }
 
 }

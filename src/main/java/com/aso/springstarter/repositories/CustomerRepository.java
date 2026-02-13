@@ -1,5 +1,6 @@
 package com.aso.springstarter.repositories;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import com.aso.springstarter.entiies.CustomerEntity;
@@ -8,4 +9,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID> {
+
+    // SELECT * FROM CUSTOMER WHERE EMAIL = ?
+    Optional<CustomerEntity> findByEmail(String email);
+
+    Optional<CustomerEntity> findByPhoneNumber(String phoneNumber);
 }
