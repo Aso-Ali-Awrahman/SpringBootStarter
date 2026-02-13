@@ -33,6 +33,9 @@ public class EmployeeEntity {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @Column(name = "email")
     private String email;
 
@@ -43,6 +46,10 @@ public class EmployeeEntity {
     @Enumerated(EnumType.STRING)
     private BackofficeUserRole role;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -50,12 +57,10 @@ public class EmployeeEntity {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    // status ACTIVE, BLOCKED
-    // phonenumber
 
     public EmployeeResponse toDto() {
         return new EmployeeResponse(
-            id, fullName, email, role, gender, createdAt
+            id, fullName, email, role, status, gender, createdAt
         );
     }
 

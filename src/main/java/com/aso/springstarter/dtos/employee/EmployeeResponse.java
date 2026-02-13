@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.aso.springstarter.entiies.BackofficeUserRole;
 import com.aso.springstarter.entiies.Gender;
+import com.aso.springstarter.entiies.UserStatus;
 import lombok.Value;
 
 @Value
@@ -13,6 +14,7 @@ public class EmployeeResponse {
     String fullName;
     String email;
     BackofficeUserRole role;
+    UserStatus status;
     Gender gender;
     Instant createdAt;
 }

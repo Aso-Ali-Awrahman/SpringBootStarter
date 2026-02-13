@@ -42,6 +42,10 @@ public class CustomerEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -53,7 +57,7 @@ public class CustomerEntity {
     private Instant createdAt;
 
     public CustomerResponse toDto() {
-        return new CustomerResponse(id, firstName, lastName, email, phoneNumber, gender, createdAt);
+        return new CustomerResponse(id, firstName, lastName, email, status, phoneNumber, gender, createdAt);
     }
 
 }

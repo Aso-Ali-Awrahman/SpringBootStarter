@@ -15,6 +15,9 @@ public class CreateEmployeeRequest {
     @Email
     String email;
 
+    @Size(min = 11, max = 11, message = "Phone number must be 11 digits")
+    String phoneNumber;
+
     @Size(min = 8, max = 50, message = "Password must be between 8-50 characters")
     String password;
 

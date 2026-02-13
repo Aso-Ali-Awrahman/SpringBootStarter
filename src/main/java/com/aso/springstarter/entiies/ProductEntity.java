@@ -5,6 +5,8 @@ import java.util.UUID;
 import com.aso.springstarter.dtos.product.ProductResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,10 +41,12 @@ public class ProductEntity {
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
 
-    // status AVAILABLE, HOLD, OUT_OF_STOCK
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
 
     public ProductResponse toDto() {
-        return new ProductResponse(id, name, description, price, stockQuantity);
+        return new ProductResponse(id, name, description, price, stockQuantity, status);
     }
 
 }

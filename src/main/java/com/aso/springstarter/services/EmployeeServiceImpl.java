@@ -9,6 +9,7 @@ import com.aso.springstarter.dtos.employee.EmployeeResponse;
 import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
 import com.aso.springstarter.entiies.EmployeeEntity;
+import com.aso.springstarter.entiies.UserStatus;
 import com.aso.springstarter.repositories.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -40,9 +41,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(new EmployeeEntity(
             null,
             request.getFullName(),
+            request.getPhoneNumber(),
             request.getEmail(),
             request.getPassword(),
             request.getRole(),
+            UserStatus.ACTIVE,
             request.getGender(),
             Instant.now()
         ));

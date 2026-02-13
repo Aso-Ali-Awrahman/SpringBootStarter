@@ -7,6 +7,7 @@ import com.aso.springstarter.dtos.product.ProductRequest;
 import com.aso.springstarter.dtos.product.ProductResponse;
 import com.aso.springstarter.dtos.product.ProductStockRequest;
 import com.aso.springstarter.entiies.ProductEntity;
+import com.aso.springstarter.entiies.ProductStatus;
 import com.aso.springstarter.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -43,7 +44,8 @@ public class ProductServiceImpl implements ProductService{
             request.getName(),
             request.getDescription(),
             request.getPrice(),
-            request.getStockQuantity()
+            request.getStockQuantity(),
+            ProductStatus.AVAILABLE
         );
         productRepository.save(product);
         return product.toDto();

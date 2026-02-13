@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import com.aso.springstarter.entiies.Gender;
+import com.aso.springstarter.entiies.UserStatus;
 import lombok.Value;
 
 @Value
@@ -12,6 +13,7 @@ public class CustomerResponse {
     String firstName;
     String lastName;
     String email;
+    UserStatus status;
     String phoneNumber;
     Gender gender;
     Instant createdAt;
