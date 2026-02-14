@@ -22,4 +22,8 @@ public interface EmployeeService {
 
     void resetPassword(UUID id, UpdateEmployeePassword request);
 
+    void activateEmployee(UUID id);
+
+    void deactivateEmployee(UUID id);
+
 }

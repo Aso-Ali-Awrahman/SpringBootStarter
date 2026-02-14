@@ -56,6 +56,7 @@ public class ProductControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getFirst().getDescription()).isEqualTo(PRODUCT_DESCRIPTION);
         softly.assertThat(response.getFirst().getPrice()).isEqualTo(PRODUCT_PRICE);
         softly.assertThat(response.getFirst().getStockQuantity()).isEqualTo(PRODUCT_STOCK_QUANTITY);
+        softly.assertThat(response.getFirst().getStatus()).isEqualTo("AVAILABLE");
     }
 
     @Test
@@ -75,6 +76,7 @@ public class ProductControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getDescription()).isEqualTo(PRODUCT_DESCRIPTION);
         softly.assertThat(response.getPrice()).isEqualTo(PRODUCT_PRICE);
         softly.assertThat(response.getStockQuantity()).isEqualTo(PRODUCT_STOCK_QUANTITY);
+        softly.assertThat(response.getStatus()).isEqualTo("AVAILABLE");
     }
 
     @Test
@@ -111,6 +113,7 @@ public class ProductControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getDescription()).isEqualTo(request.getDescription());
         softly.assertThat(response.getPrice()).isEqualTo(request.getPrice());
         softly.assertThat(response.getStockQuantity()).isEqualTo(request.getStockQuantity());
+        softly.assertThat(response.getStatus()).isEqualTo("AVAILABLE");
     }
 
     @Test

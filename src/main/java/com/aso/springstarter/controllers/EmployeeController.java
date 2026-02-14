@@ -82,5 +82,18 @@ public class EmployeeController {
         employeeService.resetPassword(id, request);
     }
 
+    @PatchMapping("protected/employees/{id}/activate")
+    @Operation(summary = "Activate employee")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void activateEmployee(@PathVariable UUID id) {
+        employeeService.activateEmployee(id);
+    }
+
+    @PatchMapping("protected/employees/{id}/deactivate")
+    @Operation(summary = "Deactivate employee")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deactivateEmployee(@PathVariable UUID id) {
+        employeeService.deactivateEmployee(id);
+    }
 
 }

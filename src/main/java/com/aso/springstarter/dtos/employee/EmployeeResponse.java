@@ -12,6 +12,7 @@ import lombok.Value;
 public class EmployeeResponse {
     UUID id;
     String fullName;
+    String phoneNumber;
     String email;
     BackofficeUserRole role;
     UserStatus status;

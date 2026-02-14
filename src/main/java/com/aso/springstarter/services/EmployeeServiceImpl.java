@@ -81,4 +81,24 @@ public class EmployeeServiceImpl implements EmployeeService {
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
     }
 
+    @Override
+    public void activateEmployee(UUID id) {
+        employeeRepository.findById(id)
+            .map(employee -> {
+                employee.setStatus(UserStatus.ACTIVE);
+                return employeeRepository.save(employee);
+            })
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
+    }
+
+    @Override
+    public void deactivateEmployee(UUID id) {
+        employeeRepository.findById(id)
+            .map(employee -> {
+                employee.setStatus(UserStatus.BLOCKED);
+                return employeeRepository.save(employee);
+            })
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
+    }
+
 }

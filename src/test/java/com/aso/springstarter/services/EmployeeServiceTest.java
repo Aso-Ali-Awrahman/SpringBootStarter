@@ -10,6 +10,7 @@ import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
 import com.aso.springstarter.entiies.BackofficeUserRole;
 import com.aso.springstarter.entiies.Gender;
+import com.aso.springstarter.entiies.UserStatus;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.SoftAssertions;
@@ -25,6 +26,7 @@ class EmployeeServiceTest {
     private static final UUID EMPLOYEE_ID_2 = UUID.fromString("81d2159b-963f-4071-9b15-9b963f0071e6");
     private static final String FULL_NAME = "Aso Ali";
     private static final String EMAIL = "aso@mail.com";
+    private static final String PHONE_NUMBER = "07501234567";
 
     @Test
     void shouldReturnAllEmployees(SoftAssertions softly) {
@@ -40,7 +42,9 @@ class EmployeeServiceTest {
         softly.assertThat(employees.getLast().getId()).isEqualTo(EMPLOYEE_ID_2);
         softly.assertThat(employees.getFirst().getFullName()).isEqualTo(FULL_NAME);
         softly.assertThat(employees.getFirst().getEmail()).isEqualTo(EMAIL);
+        softly.assertThat(employees.getFirst().getPhoneNumber()).isEqualTo(PHONE_NUMBER);
         softly.assertThat(employees.getFirst().getRole()).isEqualTo(BackofficeUserRole.ADMIN);
+        softly.assertThat(employees.getFirst().getStatus()).isEqualTo(UserStatus.ACTIVE);
         softly.assertThat(employees.getFirst().getGender()).isEqualTo(Gender.MALE);
     }
 
@@ -59,7 +63,9 @@ class EmployeeServiceTest {
         softly.assertThat(employee.getId()).isEqualTo(id);
         softly.assertThat(employee.getFullName()).isEqualTo(FULL_NAME);
         softly.assertThat(employee.getEmail()).isEqualTo(EMAIL);
+        softly.assertThat(employee.getPhoneNumber()).isEqualTo(PHONE_NUMBER);
         softly.assertThat(employee.getRole()).isEqualTo(BackofficeUserRole.ADMIN);
+        softly.assertThat(employee.getStatus()).isEqualTo(UserStatus.ACTIVE);
         softly.assertThat(employee.getGender()).isEqualTo(Gender.MALE);
     }
 
@@ -80,7 +86,7 @@ class EmployeeServiceTest {
     void shouldCreateEmployee(SoftAssertions softly) {
         // given 
         final var employeeService = new TestEmployeeService(false);
-        final var request = new CreateEmployeeRequest(FULL_NAME, EMAIL, "1233445676", BackofficeUserRole.ADMIN, Gender.MALE);
+        final var request = new CreateEmployeeRequest(FULL_NAME, EMAIL, "07501234567", "1233445676", BackofficeUserRole.ADMIN, Gender.MALE);
         
         // when
         employeeService.createEmployee(request);
@@ -143,8 +149,8 @@ class EmployeeServiceTest {
         @Override
         public List<EmployeeResponse> getAllEmployees() {
             return List.of(
-                new EmployeeResponse(EMPLOYEE_ID_1, FULL_NAME, EMAIL, BackofficeUserRole.ADMIN, Gender.MALE, Instant.now()),
-                new EmployeeResponse(EMPLOYEE_ID_2, "Alice Bob", "alice@mail.com", BackofficeUserRole.DATA_ENTRY, Gender.FEMALE, Instant.now())
+                new EmployeeResponse(EMPLOYEE_ID_1, FULL_NAME, EMAIL, PHONE_NUMBER, BackofficeUserRole.ADMIN, UserStatus.ACTIVE, Gender.MALE, Instant.now()),
+                new EmployeeResponse(EMPLOYEE_ID_2, "Alice Bob", "alice@mail.com", "07500012121", BackofficeUserRole.DATA_ENTRY, UserStatus.ACTIVE, Gender.FEMALE, Instant.now())
             );
         }
 
@@ -154,7 +160,7 @@ class EmployeeServiceTest {
                 return null;
             }
             return new EmployeeResponse(
-                id, FULL_NAME, EMAIL, BackofficeUserRole.ADMIN, Gender.MALE, Instant.now()
+                id, FULL_NAME, EMAIL, PHONE_NUMBER, BackofficeUserRole.ADMIN, UserStatus.ACTIVE, Gender.MALE, Instant.now()
             );
         }
 
@@ -188,6 +194,16 @@ class EmployeeServiceTest {
                 return;
             }
             count++;
+        }
+
+        @Override
+        public void activateEmployee(UUID id) {
+
+        }
+
+        @Override
+        public void deactivateEmployee(UUID id) {
+
         }
     }
 

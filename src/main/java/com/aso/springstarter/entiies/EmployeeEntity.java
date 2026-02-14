@@ -60,7 +60,7 @@ public class EmployeeEntity {
 
     public EmployeeResponse toDto() {
         return new EmployeeResponse(
-            id, fullName, email, role, status, gender, createdAt
+            id, fullName, phoneNumber, email, role, status, gender, createdAt
         );
     }
 

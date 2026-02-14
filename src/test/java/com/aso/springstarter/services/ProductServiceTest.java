@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.aso.springstarter.dtos.product.ProductRequest;
 import com.aso.springstarter.dtos.product.ProductResponse;
 import com.aso.springstarter.dtos.product.ProductStockRequest;
+import com.aso.springstarter.entiies.ProductStatus;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
@@ -59,6 +60,8 @@ class ProductServiceTest {
         softly.assertThat(product.getName()).isEqualTo("Product 1");
         softly.assertThat(product.getDescription()).isEqualTo("Description 1");
         softly.assertThat(product.getPrice()).isEqualTo(100.0);
+        softly.assertThat(product.getStockQuantity()).isEqualTo(100);
+        softly.assertThat(product.getStatus()).isEqualTo(ProductStatus.AVAILABLE);
     }
 
     @Test
@@ -89,6 +92,7 @@ class ProductServiceTest {
         softly.assertThat(product.getDescription()).isEqualTo(request.getDescription());
         softly.assertThat(product.getPrice()).isEqualTo(100.0);
         softly.assertThat(product.getStockQuantity()).isEqualTo(request.getStockQuantity());
+        softly.assertThat(product.getStatus()).isEqualTo(ProductStatus.AVAILABLE);
     }
 
     @Test
@@ -168,10 +172,10 @@ class ProductServiceTest {
             }
             return List.of(
                 new ProductResponse(
-                    PRODUCT_ID_1, "Product 1", "Description 1", 100.0, 100
+                    PRODUCT_ID_1, "Product 1", "Description 1", 100.0, 100, ProductStatus.AVAILABLE
                 ),
                 new ProductResponse(
-                    PRODUCT_ID_2, "Product 2", "Description 2", 200.0, 200
+                    PRODUCT_ID_2, "Product 2", "Description 2", 200.0, 200, ProductStatus.AVAILABLE
                 )
             );
         }
@@ -182,7 +186,7 @@ class ProductServiceTest {
                 return null;
             }
             return new ProductResponse(
-                PRODUCT_ID_1, "Product 1", "Description 1", 100.0, 100
+                PRODUCT_ID_1, "Product 1", "Description 1", 100.0, 100, ProductStatus.AVAILABLE
             );
         }
 
@@ -192,7 +196,7 @@ class ProductServiceTest {
                 return null;
             }
             return new ProductResponse(
-                PRODUCT_ID_1, request.getName(), request.getDescription(), request.getPrice(), request.getStockQuantity()
+                PRODUCT_ID_1, request.getName(), request.getDescription(), request.getPrice(), request.getStockQuantity(), ProductStatus.AVAILABLE
             );
         }
 

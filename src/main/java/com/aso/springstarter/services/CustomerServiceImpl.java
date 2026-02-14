@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.aso.springstarter.dtos.customer.CustomerResponse;
 import com.aso.springstarter.entiies.CustomerEntity;
+import com.aso.springstarter.entiies.UserStatus;
 import com.aso.springstarter.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,5 +48,25 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByPhoneNumber(phoneNumber)
             .map(CustomerEntity::toDto)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with this phone number"));
+    }
+
+    @Override
+    public void activateCustomer(UUID id) {
+        customerRepository.findById(id)
+            .map(customer -> {
+                customer.setStatus(UserStatus.ACTIVE);
+                return customerRepository.save(customer);
+            })
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+    }
+
+    @Override
+    public void deactivateCustomer(UUID id) {
+        customerRepository.findById(id)
+            .map(customer -> {
+                customer.setStatus(UserStatus.BLOCKED);
+                return customerRepository.save(customer);
+            })
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
     }
 }
