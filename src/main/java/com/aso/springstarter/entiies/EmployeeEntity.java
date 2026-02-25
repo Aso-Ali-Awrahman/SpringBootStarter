@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import com.aso.springstarter.dtos.employee.EmployeeResponse;
+import com.aso.springstarter.security.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeEntity {
+public class EmployeeEntity implements User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -44,7 +45,7 @@ public class EmployeeEntity {
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private BackofficeUserRole role;
+    private UserRole role;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)

@@ -3,7 +3,7 @@ package com.aso.springstarter.dtos.employee;
 import java.time.Instant;
 import java.util.UUID;
 
-import com.aso.springstarter.entiies.BackofficeUserRole;
+import com.aso.springstarter.entiies.UserRole;
 import com.aso.springstarter.entiies.Gender;
 import com.aso.springstarter.entiies.UserStatus;
 import lombok.Value;
@@ -14,7 +14,7 @@ public class EmployeeResponse {
     String fullName;
     String phoneNumber;
     String email;
-    BackofficeUserRole role;
+    UserRole role;
     UserStatus status;
     Gender gender;
     Instant createdAt;

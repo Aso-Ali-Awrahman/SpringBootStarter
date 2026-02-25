@@ -1,6 +1,6 @@
 package com.aso.springstarter.dtos.employee;
 
-import com.aso.springstarter.entiies.BackofficeUserRole;
+import com.aso.springstarter.entiies.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -15,5 +15,5 @@ public class UpdateEmployeeRequest {
     String email;
 
     @NotNull(message = "Role is required")
-    BackofficeUserRole role;
+    UserRole role;
 }

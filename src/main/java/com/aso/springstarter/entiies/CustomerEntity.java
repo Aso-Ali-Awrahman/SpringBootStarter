@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 import com.aso.springstarter.dtos.customer.CustomerResponse;
+import com.aso.springstarter.security.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerEntity {
+public class CustomerEntity implements User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -56,8 +57,12 @@ public class CustomerEntity {
     @Column(name = "created_at")
     private Instant createdAt;
 
+    @Override
+    public UserRole getRole() {
+        return UserRole.CUSTOMER;
+    }
+
     public CustomerResponse toDto() {
         return new CustomerResponse(id, firstName, lastName, email, status, phoneNumber, gender, createdAt);
     }
-
 }

@@ -15,7 +15,7 @@ import com.aso.springstarter.dtos.employee.CreateEmployeeRequest;
 import com.aso.springstarter.dtos.employee.EmployeeResponse;
 import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
-import com.aso.springstarter.entiies.BackofficeUserRole;
+import com.aso.springstarter.entiies.UserRole;
 import com.aso.springstarter.entiies.Gender;
 import com.aso.springstarter.entiies.UserStatus;
 import com.aso.springstarter.services.EmployeeService;
@@ -60,7 +60,7 @@ public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getFirst().getFullName()).isEqualTo(FULL_NAME);
         softly.assertThat(response.getFirst().getEmail()).isEqualTo(EMAIL);
         softly.assertThat(response.getFirst().getPhoneNumber()).isEqualTo(PHONE_NUMBER);
-        softly.assertThat(response.getFirst().getRole()).isEqualTo(BackofficeUserRole.ADMIN);
+        softly.assertThat(response.getFirst().getRole()).isEqualTo(UserRole.ADMIN);
         softly.assertThat(response.getFirst().getGender()).isEqualTo(Gender.MALE);
         softly.assertThat(response.getFirst().getCreatedAt()).isNotNull();
         softly.assertThat(response.getFirst().getStatus()).isEqualTo(UserStatus.ACTIVE);
@@ -82,7 +82,7 @@ public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getFullName()).isEqualTo(FULL_NAME);
         softly.assertThat(response.getEmail()).isEqualTo(EMAIL);
         softly.assertThat(response.getPhoneNumber()).isEqualTo(PHONE_NUMBER);
-        softly.assertThat(response.getRole()).isEqualTo(BackofficeUserRole.ADMIN);
+        softly.assertThat(response.getRole()).isEqualTo(UserRole.ADMIN);
         softly.assertThat(response.getGender()).isEqualTo(Gender.MALE);
         softly.assertThat(response.getCreatedAt()).isNotNull();
         softly.assertThat(response.getStatus()).isEqualTo(UserStatus.ACTIVE);
@@ -107,7 +107,7 @@ public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
     @Test
     void shouldCreateEmployee(SoftAssertions softly) throws Exception {
         // given
-        final var request = new CreateEmployeeRequest(FULL_NAME, EMAIL, PHONE_NUMBER, "12345678", BackofficeUserRole.ADMIN, Gender.MALE);
+        final var request = new CreateEmployeeRequest(FULL_NAME, EMAIL, PHONE_NUMBER, "12345678", UserRole.ADMIN, Gender.MALE);
 
         // when
         mockMvc.perform(
@@ -155,7 +155,7 @@ public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
     void shouldUpdateEmployee(SoftAssertions softly) throws Exception {
         // given
         final var id = createEmployee();
-        final var request = new UpdateEmployeeRequest("Updated Name", EMAIL, BackofficeUserRole.DATA_ENTRY);
+        final var request = new UpdateEmployeeRequest("Updated Name", EMAIL, UserRole.DATA_ENTRY);
 
         // when
         mockMvc.perform(
@@ -175,7 +175,7 @@ public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
     void shouldNotUpdateEmployeeDueNotFound(SoftAssertions softly) throws Exception {
         // given
         final var id = UUID.randomUUID();
-        final var request = new UpdateEmployeeRequest("Updated Name", EMAIL, BackofficeUserRole.DATA_ENTRY);
+        final var request = new UpdateEmployeeRequest("Updated Name", EMAIL, UserRole.DATA_ENTRY);
 
         // when
         final var result = mockMvc.perform(
@@ -271,7 +271,7 @@ public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
 
     private UUID createEmployee() {
         employeeService.createEmployee(new CreateEmployeeRequest(
-            FULL_NAME, EMAIL, PHONE_NUMBER, PASSWORD, BackofficeUserRole.ADMIN, Gender.MALE
+            FULL_NAME, EMAIL, PHONE_NUMBER, PASSWORD, UserRole.ADMIN, Gender.MALE
         ));
         return employeeService.getAllEmployees().getFirst().getId();
     }

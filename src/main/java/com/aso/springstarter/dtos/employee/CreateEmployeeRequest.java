@@ -1,6 +1,6 @@
 package com.aso.springstarter.dtos.employee;
 
-import com.aso.springstarter.entiies.BackofficeUserRole;
+import com.aso.springstarter.entiies.UserRole;
 import com.aso.springstarter.entiies.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +22,7 @@ public class CreateEmployeeRequest {
     String password;
 
     @NotNull(message = "Role is required")
-    BackofficeUserRole role;
+    UserRole role;
 
     @NotNull(message = "Gender is required")
     Gender gender;

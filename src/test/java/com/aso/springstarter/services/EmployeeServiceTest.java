@@ -8,10 +8,9 @@ import com.aso.springstarter.dtos.employee.CreateEmployeeRequest;
 import com.aso.springstarter.dtos.employee.EmployeeResponse;
 import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
-import com.aso.springstarter.entiies.BackofficeUserRole;
+import com.aso.springstarter.entiies.UserRole;
 import com.aso.springstarter.entiies.Gender;
 import com.aso.springstarter.entiies.UserStatus;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
@@ -43,7 +42,7 @@ class EmployeeServiceTest {
         softly.assertThat(employees.getFirst().getFullName()).isEqualTo(FULL_NAME);
         softly.assertThat(employees.getFirst().getEmail()).isEqualTo(EMAIL);
         softly.assertThat(employees.getFirst().getPhoneNumber()).isEqualTo(PHONE_NUMBER);
-        softly.assertThat(employees.getFirst().getRole()).isEqualTo(BackofficeUserRole.ADMIN);
+        softly.assertThat(employees.getFirst().getRole()).isEqualTo(UserRole.ADMIN);
         softly.assertThat(employees.getFirst().getStatus()).isEqualTo(UserStatus.ACTIVE);
         softly.assertThat(employees.getFirst().getGender()).isEqualTo(Gender.MALE);
     }
@@ -64,7 +63,7 @@ class EmployeeServiceTest {
         softly.assertThat(employee.getFullName()).isEqualTo(FULL_NAME);
         softly.assertThat(employee.getEmail()).isEqualTo(EMAIL);
         softly.assertThat(employee.getPhoneNumber()).isEqualTo(PHONE_NUMBER);
-        softly.assertThat(employee.getRole()).isEqualTo(BackofficeUserRole.ADMIN);
+        softly.assertThat(employee.getRole()).isEqualTo(UserRole.ADMIN);
         softly.assertThat(employee.getStatus()).isEqualTo(UserStatus.ACTIVE);
         softly.assertThat(employee.getGender()).isEqualTo(Gender.MALE);
     }
@@ -86,7 +85,7 @@ class EmployeeServiceTest {
     void shouldCreateEmployee(SoftAssertions softly) {
         // given 
         final var employeeService = new TestEmployeeService(false);
-        final var request = new CreateEmployeeRequest(FULL_NAME, EMAIL, "07501234567", "1233445676", BackofficeUserRole.ADMIN, Gender.MALE);
+        final var request = new CreateEmployeeRequest(FULL_NAME, EMAIL, "07501234567", "1233445676", UserRole.ADMIN, Gender.MALE);
         
         // when
         employeeService.createEmployee(request);
@@ -100,7 +99,7 @@ class EmployeeServiceTest {
         // given 
         final var employeeService = new TestEmployeeService(false);
         final var id = UUID.randomUUID();
-        final var request = new UpdateEmployeeRequest(FULL_NAME, EMAIL, BackofficeUserRole.ADMIN);
+        final var request = new UpdateEmployeeRequest(FULL_NAME, EMAIL, UserRole.ADMIN);
 
         // when
         employeeService.updateEmployee(id, request);
@@ -149,8 +148,8 @@ class EmployeeServiceTest {
         @Override
         public List<EmployeeResponse> getAllEmployees() {
             return List.of(
-                new EmployeeResponse(EMPLOYEE_ID_1, FULL_NAME, EMAIL, PHONE_NUMBER, BackofficeUserRole.ADMIN, UserStatus.ACTIVE, Gender.MALE, Instant.now()),
-                new EmployeeResponse(EMPLOYEE_ID_2, "Alice Bob", "alice@mail.com", "07500012121", BackofficeUserRole.DATA_ENTRY, UserStatus.ACTIVE, Gender.FEMALE, Instant.now())
+                new EmployeeResponse(EMPLOYEE_ID_1, FULL_NAME, EMAIL, PHONE_NUMBER, UserRole.ADMIN, UserStatus.ACTIVE, Gender.MALE, Instant.now()),
+                new EmployeeResponse(EMPLOYEE_ID_2, "Alice Bob", "alice@mail.com", "07500012121", UserRole.DATA_ENTRY, UserStatus.ACTIVE, Gender.FEMALE, Instant.now())
             );
         }
 
@@ -160,7 +159,7 @@ class EmployeeServiceTest {
                 return null;
             }
             return new EmployeeResponse(
-                id, FULL_NAME, EMAIL, PHONE_NUMBER, BackofficeUserRole.ADMIN, UserStatus.ACTIVE, Gender.MALE, Instant.now()
+                id, FULL_NAME, EMAIL, PHONE_NUMBER, UserRole.ADMIN, UserStatus.ACTIVE, Gender.MALE, Instant.now()
             );
         }
 

@@ -8,7 +8,7 @@ import com.aso.springstarter.dtos.employee.EmployeeResponse;
 import com.aso.springstarter.dtos.employee.RoleResponse;
 import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
-import com.aso.springstarter.entiies.BackofficeUserRole;
+import com.aso.springstarter.entiies.UserRole;
 import com.aso.springstarter.services.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -64,7 +64,7 @@ public class EmployeeController {
     @Operation(summary = "Get backoffice user roles")
     @ResponseStatus(HttpStatus.OK)
     public List<RoleResponse> getRoles() {
-        return BackofficeUserRole.getRoles()
+        return UserRole.getRoles()
             .stream().map(RoleResponse::new).toList();
     }
 

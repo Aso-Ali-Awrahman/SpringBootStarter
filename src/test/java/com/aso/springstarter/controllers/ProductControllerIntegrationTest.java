@@ -14,6 +14,7 @@ import com.aso.springstarter.IntegrationTestBase;
 import com.aso.springstarter.dtos.product.ProductRequest;
 import com.aso.springstarter.dtos.product.ProductResponse;
 import com.aso.springstarter.dtos.product.ProductStockRequest;
+import com.aso.springstarter.entiies.ProductStatus;
 import com.aso.springstarter.services.ProductService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,7 +57,7 @@ public class ProductControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getFirst().getDescription()).isEqualTo(PRODUCT_DESCRIPTION);
         softly.assertThat(response.getFirst().getPrice()).isEqualTo(PRODUCT_PRICE);
         softly.assertThat(response.getFirst().getStockQuantity()).isEqualTo(PRODUCT_STOCK_QUANTITY);
-        softly.assertThat(response.getFirst().getStatus()).isEqualTo("AVAILABLE");
+        softly.assertThat(response.getFirst().getStatus()).isEqualTo(ProductStatus.AVAILABLE);
     }
 
     @Test
@@ -76,7 +77,7 @@ public class ProductControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getDescription()).isEqualTo(PRODUCT_DESCRIPTION);
         softly.assertThat(response.getPrice()).isEqualTo(PRODUCT_PRICE);
         softly.assertThat(response.getStockQuantity()).isEqualTo(PRODUCT_STOCK_QUANTITY);
-        softly.assertThat(response.getStatus()).isEqualTo("AVAILABLE");
+        softly.assertThat(response.getStatus()).isEqualTo(ProductStatus.AVAILABLE);
     }
 
     @Test
@@ -113,7 +114,7 @@ public class ProductControllerIntegrationTest extends IntegrationTestBase {
         softly.assertThat(response.getDescription()).isEqualTo(request.getDescription());
         softly.assertThat(response.getPrice()).isEqualTo(request.getPrice());
         softly.assertThat(response.getStockQuantity()).isEqualTo(request.getStockQuantity());
-        softly.assertThat(response.getStatus()).isEqualTo("AVAILABLE");
+        softly.assertThat(response.getStatus()).isEqualTo(ProductStatus.AVAILABLE);
     }
 
     @Test
