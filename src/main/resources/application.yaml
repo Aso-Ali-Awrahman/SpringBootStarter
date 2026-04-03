@@ -12,3 +12,7 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
     enabled: true
+  jwt:
+    secret: skdjhvfdsjhfvcskjhvwekjhvwkehfvdsknbcvkjshcvkjwevhfscdsakfjvhwejlfvhchjhbh
+    accessTokenExpiration: 900 # 15 minutes
+    refreshTokenExpiration: 86400 # 1 day

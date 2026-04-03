@@ -3,7 +3,9 @@ package com.aso.springstarter.controllers;
 import java.time.Instant;
 import java.util.HashMap;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,6 +31,11 @@ public class GlobalExceptionHandler {
         );
         error.setProperty("errors", validationErrors);
         return error;
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ProblemDetail handleBadCredentialsException() {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid email or password");
     }
 
 }

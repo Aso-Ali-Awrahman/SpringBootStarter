@@ -14,5 +14,6 @@
     <include file="07-add-status-to-customer-table.xml" relativeToChangelogFile="true"/>
     <include file="08-add-phone_number-to-employee-table.xml" relativeToChangelogFile="true"/>
     <include file="09-fix-status-data-in-product-table.xml" relativeToChangelogFile="true"/>
+    <include file="10-fix-password-length.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
