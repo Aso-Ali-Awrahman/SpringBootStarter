@@ -3,6 +3,10 @@ package com.aso.springstarter.configurations;
 import com.aso.springstarter.repositories.CustomerRepository;
 import com.aso.springstarter.repositories.EmployeeRepository;
 import com.aso.springstarter.repositories.ProductRepository;
+import com.aso.springstarter.security.JwtAuthenticationFilter;
+import com.aso.springstarter.security.JwtConfig;
+import com.aso.springstarter.security.JwtService;
+import com.aso.springstarter.security.JwtServiceImpl;
 import com.aso.springstarter.security.UserDetailsServiceImpl;
 import com.aso.springstarter.services.CustomerService;
 import com.aso.springstarter.services.CustomerServiceImpl;
@@ -35,6 +39,16 @@ public class ServiceConfiguration {
     @Bean
     UserDetailsService userDetailsService(EmployeeRepository employeeRepository, CustomerRepository customerRepository) {
         return new UserDetailsServiceImpl(employeeRepository, customerRepository);
+    }
+
+    @Bean
+    JwtService jwtService(JwtConfig jwtConfig) {
+        return new JwtServiceImpl(jwtConfig);
+    }
+
+    @Bean
+    JwtAuthenticationFilter jwtAuthenticationFilter(JwtService jwtService) {
+        return new JwtAuthenticationFilter(jwtService);
     }
 
 }

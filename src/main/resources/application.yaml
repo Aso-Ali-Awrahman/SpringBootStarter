@@ -13,6 +13,8 @@ spring:
     change-log: classpath:db/changelog/changelog-master.xml
     enabled: true
   jwt:
+    # Best practice is to store this in an environment variable
+    # For devlopment purposes, we will store it here
     secret: skdjhvfdsjhfvcskjhvwekjhvwkehfvdsknbcvkjshcvkjwevhfscdsakfjvhwejlfvhchjhbh
     accessTokenExpiration: 900 # 15 minutes
     refreshTokenExpiration: 86400 # 1 day

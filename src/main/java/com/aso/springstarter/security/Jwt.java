@@ -5,6 +5,7 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.UUID;
 
+import com.aso.springstarter.entiies.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class Jwt {
         this.token = token;
         this.secretKey = secretKey;
         this.claims = extractClaims();
-        this.type = claims.get("tokenType", Type.class);
+        this.type = Type.valueOf(claims.get("tokenType").toString());
     }
 
     public static Jwt of(User user, int expiration, Type tokenType, SecretKey secretKey) {
@@ -40,6 +41,20 @@ public class Jwt {
         return new Jwt(token, secretKey);
     }
 
+    public boolean isExpired() {
+        // if it is expired, it will return true.
+        return this.claims.getExpiration().before(new Date());
+    }
+
+    public UserPrincipal getUser() {
+        return new UserPrincipal(
+            UUID.fromString(claims.getSubject()),
+            claims.get("email").toString(),
+            null,
+            UserRole.valueOf(claims.get("role").toString())
+        );
+    }
+
     private Claims extractClaims() {
         return Jwts.parser()
             .verifyWith(this.secretKey)
@@ -49,7 +64,11 @@ public class Jwt {
     }
 
     public enum Type {
-        ACCESS, REFRESH
+        ACCESS, REFRESH;
+
+        public boolean isAccessToken() {
+            return this == ACCESS;
+        }
     }
 
 }
