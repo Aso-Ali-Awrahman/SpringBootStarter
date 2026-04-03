@@ -14,12 +14,14 @@ import com.aso.springstarter.repositories.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<EmployeeResponse> getAllEmployees() {
@@ -43,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             request.getFullName(),
             request.getPhoneNumber(),
             request.getEmail(),
-            request.getPassword(),
+            passwordEncoder.encode(request.getPassword()),
             request.getRole(),
             UserStatus.ACTIVE,
             request.getGender(),

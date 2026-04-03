@@ -9,6 +9,8 @@ import com.aso.springstarter.dtos.employee.RoleResponse;
 import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
 import com.aso.springstarter.entiies.UserRole;
+import com.aso.springstarter.security.authorization.AdminAndAssistantRolesRequired;
+import com.aso.springstarter.security.authorization.AdminRoleRequired;
 import com.aso.springstarter.services.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,18 +32,20 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class EmployeeController {
 
-    private final EmployeeService employeeService;
-
     @GetMapping(value = "protected/employees")
     @Operation(summary = "Get all employees")
     @ResponseStatus(HttpStatus.OK)
+    @AdminAndAssistantRolesRequired
     public List<EmployeeResponse> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
+    private final EmployeeService employeeService;
+
     @GetMapping(value = "protected/employees/{id}")
     @Operation(summary = "Get employee by id")
     @ResponseStatus(HttpStatus.OK)
+    @AdminAndAssistantRolesRequired
     public EmployeeResponse getEmployee(@PathVariable UUID id) {
         return employeeService.getEmployee(id);
     }
@@ -49,6 +53,7 @@ public class EmployeeController {
     @PostMapping(value = "protected/employees")
     @Operation(summary = "Create employee")
     @ResponseStatus(HttpStatus.CREATED)
+    @AdminRoleRequired
     public void createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
         employeeService.createEmployee(request);
     }
@@ -56,6 +61,7 @@ public class EmployeeController {
     @PutMapping("protected/employees/{id}")
     @Operation(summary = "Update employee")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @AdminRoleRequired
     public void updateEmployee(@Valid @RequestBody UpdateEmployeeRequest request, @PathVariable UUID id) {
         employeeService.updateEmployee(id, request);
     }
@@ -63,6 +69,7 @@ public class EmployeeController {
     @GetMapping("protected/employees/roles")
     @Operation(summary = "Get backoffice user roles")
     @ResponseStatus(HttpStatus.OK)
+    @AdminAndAssistantRolesRequired
     public List<RoleResponse> getRoles() {
         return UserRole.getRoles()
             .stream().map(RoleResponse::new).toList();
@@ -71,6 +78,7 @@ public class EmployeeController {
     @DeleteMapping(value = "protected/employees/{id}")
     @Operation(summary = "Delete employee by id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @AdminRoleRequired
     public void deleteEmployee(@PathVariable UUID id) {
         employeeService.deleteEmployee(id);
     }
@@ -78,6 +86,7 @@ public class EmployeeController {
     @PatchMapping("protected/employees/{id}/reset-password")
     @Operation(summary = "Force reset password of employee")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @AdminRoleRequired
     public void resetPassword(@PathVariable UUID id, @Valid @RequestBody UpdateEmployeePassword request) {
         employeeService.resetPassword(id, request);
     }
@@ -85,6 +94,7 @@ public class EmployeeController {
     @PatchMapping("protected/employees/{id}/activate")
     @Operation(summary = "Activate employee")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @AdminRoleRequired
     public void activateEmployee(@PathVariable UUID id) {
         employeeService.activateEmployee(id);
     }
@@ -92,6 +102,7 @@ public class EmployeeController {
     @PatchMapping("protected/employees/{id}/deactivate")
     @Operation(summary = "Deactivate employee")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @AdminRoleRequired
     public void deactivateEmployee(@PathVariable UUID id) {
         employeeService.deactivateEmployee(id);
     }

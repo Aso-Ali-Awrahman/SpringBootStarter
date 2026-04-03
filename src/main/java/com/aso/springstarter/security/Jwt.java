@@ -69,6 +69,10 @@ public class Jwt {
         public boolean isAccessToken() {
             return this == ACCESS;
         }
+
+        public boolean isRefreshToken() {
+            return this == REFRESH;
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.aso.springstarter.dtos.product.ProductRequest;
 import com.aso.springstarter.dtos.product.ProductResponse;
 import com.aso.springstarter.dtos.product.ProductStockRequest;
+import com.aso.springstarter.security.authorization.DataEntryRoleRequired;
 import com.aso.springstarter.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -52,12 +53,14 @@ public class ProductController {
 
     @PostMapping("/protected/products")
     @ResponseStatus(HttpStatus.OK)
+    @DataEntryRoleRequired
     public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest request) {
         return ResponseEntity.ok(productService.createProduct(request));
     }
 
     @PutMapping("/protected/products/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DataEntryRoleRequired
     public ResponseEntity<Void> updateProduct(@PathVariable UUID productId, @Valid @RequestBody ProductRequest request) {
         productService.updateProduct(productId, request);
         return ResponseEntity.noContent().build();
@@ -65,6 +68,7 @@ public class ProductController {
 
     @PatchMapping("/protected/products/{productId}/stock")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DataEntryRoleRequired
     public ResponseEntity<Void> updateProductStock(@PathVariable UUID productId, @Valid @RequestBody ProductStockRequest request) {
         productService.updateProductStock(productId, request);
         return ResponseEntity.noContent().build();
@@ -72,6 +76,7 @@ public class ProductController {
 
     @DeleteMapping("/protected/products/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DataEntryRoleRequired
     public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();

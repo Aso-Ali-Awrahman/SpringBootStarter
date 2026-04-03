@@ -3,6 +3,7 @@ package com.aso.springstarter.services;
 import java.util.List;
 import java.util.UUID;
 
+import com.aso.springstarter.dtos.auth.RegisterCustomerRequest;
 import com.aso.springstarter.dtos.customer.CustomerResponse;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
@@ -34,6 +35,11 @@ public class CustomerServiceTest {
         @Override
         public CustomerResponse getCustomerByPhoneNumber(String phoneNumber) {
             return null;
+        }
+
+        @Override
+        public void createCustomer(RegisterCustomerRequest request) {
+
         }
 
         @Override

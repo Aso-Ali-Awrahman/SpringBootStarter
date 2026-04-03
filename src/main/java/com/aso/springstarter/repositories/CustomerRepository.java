@@ -13,5 +13,7 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID> 
     // SELECT * FROM CUSTOMER WHERE EMAIL = ?
     Optional<CustomerEntity> findByEmail(String email);
 
+    boolean existsByEmail(String email);
+
     Optional<CustomerEntity> findByPhoneNumber(String phoneNumber);
 }

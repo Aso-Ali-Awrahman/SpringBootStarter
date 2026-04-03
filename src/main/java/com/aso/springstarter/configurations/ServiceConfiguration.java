@@ -17,6 +17,7 @@ import com.aso.springstarter.services.ProductServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ServiceConfiguration {
@@ -27,13 +28,13 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    EmployeeService employeeService(EmployeeRepository employeeRepository){
-        return new EmployeeServiceImpl(employeeRepository);
+    EmployeeService employeeService(EmployeeRepository employeeRepository, PasswordEncoder passwordEncoder){
+        return new EmployeeServiceImpl(employeeRepository, passwordEncoder);
     }
 
     @Bean
-    CustomerService customerService(CustomerRepository customerRepository) {
-        return new CustomerServiceImpl(customerRepository);
+    CustomerService customerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+        return new CustomerServiceImpl(customerRepository, passwordEncoder);
     }
 
     @Bean

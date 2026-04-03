@@ -1,20 +1,25 @@
 package com.aso.springstarter.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+import com.aso.springstarter.dtos.auth.RegisterCustomerRequest;
 import com.aso.springstarter.dtos.customer.CustomerResponse;
 import com.aso.springstarter.entiies.CustomerEntity;
 import com.aso.springstarter.entiies.UserStatus;
 import com.aso.springstarter.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<CustomerResponse> getAllCustomers() {
@@ -48,6 +53,25 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findByPhoneNumber(phoneNumber)
             .map(CustomerEntity::toDto)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found with this phone number"));
+    }
+
+    @Override
+    @Transactional
+    public void createCustomer(RegisterCustomerRequest request) {
+        if (customerRepository.existsByEmail(request.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Customer with this email already exists");
+        }
+        customerRepository.save(new CustomerEntity(
+            null,
+            request.getFirstName(),
+            request.getLastName(),
+            request.getEmail(),
+            passwordEncoder.encode(request.getPassword()),
+            UserStatus.ACTIVE,
+            request.getPhoneNumber(),
+            request.getGender(),
+            Instant.now()
+        ));
     }
 
     @Override

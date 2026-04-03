@@ -5,10 +5,11 @@ import java.util.List;
 
 public enum UserRole {
     ADMIN,
+    ASSISTANT,
     DATA_ENTRY,
     CUSTOMER;
 
     public static List<UserRole> getRoles() {
-        return Arrays.asList(ADMIN, DATA_ENTRY);
+        return Arrays.asList(ADMIN, DATA_ENTRY, ASSISTANT);
     }
 }
