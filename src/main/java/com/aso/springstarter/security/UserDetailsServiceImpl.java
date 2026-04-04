@@ -1,8 +1,10 @@
 package com.aso.springstarter.security;
 
+import com.aso.springstarter.entiies.UserStatus;
 import com.aso.springstarter.repositories.CustomerRepository;
 import com.aso.springstarter.repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,14 +21,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             .map(employee -> (User) employee)
             .orElseGet(() -> customerRepository.findByEmail(email)
                 .map(customer -> (User) customer)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"))
+                .orElseThrow(() -> new BadCredentialsException("User not found"))
             );
+
+        if (user.getStatus() == UserStatus.BLOCKED) {
+            throw new BadCredentialsException("User is blocked");
+        }
 
         return new UserPrincipal(
             user.getId(),
             user.getEmail(),
             user.getPassword(),
-            user.getRole()
+            user.getRole(),
+            user.getStatus()
         );
     }
 

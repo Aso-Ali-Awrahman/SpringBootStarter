@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.aso.springstarter.entiies.UserRole;
+import com.aso.springstarter.entiies.UserStatus;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.Getter;
@@ -51,7 +52,8 @@ public class Jwt {
             UUID.fromString(claims.getSubject()),
             claims.get("email").toString(),
             null,
-            UserRole.valueOf(claims.get("role").toString())
+            UserRole.valueOf(claims.get("role").toString()),
+            UserStatus.ACTIVE
         );
     }
 
