@@ -17,6 +17,8 @@ import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class EmployeeServiceTest {
@@ -151,6 +153,11 @@ class EmployeeServiceTest {
                 new EmployeeResponse(EMPLOYEE_ID_1, FULL_NAME, EMAIL, PHONE_NUMBER, UserRole.ADMIN, UserStatus.ACTIVE, Gender.MALE, Instant.now()),
                 new EmployeeResponse(EMPLOYEE_ID_2, "Alice Bob", "alice@mail.com", "07500012121", UserRole.DATA_ENTRY, UserStatus.ACTIVE, Gender.FEMALE, Instant.now())
             );
+        }
+
+        @Override
+        public Page<EmployeeResponse> getPaginatedEmployees(Pageable pageable, List<UserStatus> statuses, List<UserRole> roles) {
+            return null;
         }
 
         @Override

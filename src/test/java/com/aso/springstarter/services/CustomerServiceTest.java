@@ -5,9 +5,12 @@ import java.util.UUID;
 
 import com.aso.springstarter.dtos.auth.RegisterCustomerRequest;
 import com.aso.springstarter.dtos.customer.CustomerResponse;
+import com.aso.springstarter.entiies.UserStatus;
 import lombok.AllArgsConstructor;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @ExtendWith(SoftAssertionsExtension.class)
 public class CustomerServiceTest {
@@ -20,6 +23,11 @@ public class CustomerServiceTest {
         @Override
         public List<CustomerResponse> getAllCustomers() {
             return List.of();
+        }
+
+        @Override
+        public Page<CustomerResponse> getPaginatedCustomers(Pageable pageable, List<UserStatus> statuses) {
+            return null;
         }
 
         @Override

@@ -12,6 +12,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @ExtendWith(SoftAssertionsExtension.class)
 class ProductServiceTest {
@@ -188,6 +190,16 @@ class ProductServiceTest {
             return new ProductResponse(
                 PRODUCT_ID_1, "Product 1", "Description 1", 100.0, 100, ProductStatus.AVAILABLE
             );
+        }
+
+        @Override
+        public ProductResponse getAvailableProduct(UUID productId) {
+            return null;
+        }
+
+        @Override
+        public Page<ProductResponse> getPaginatedProducts(Pageable pageable, List<ProductStatus> statuses) {
+            return null;
         }
 
         @Override

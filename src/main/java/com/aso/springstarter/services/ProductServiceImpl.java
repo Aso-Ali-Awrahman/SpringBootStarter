@@ -11,6 +11,8 @@ import com.aso.springstarter.entiies.ProductStatus;
 import com.aso.springstarter.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,6 +36,18 @@ public class ProductServiceImpl implements ProductService{
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
         return product.toDto();
+    }
+
+    @Override
+    public ProductResponse getAvailableProduct(UUID productId) {
+        return productRepository.findByIdAndStatus(productId, ProductStatus.AVAILABLE)
+            .map(ProductEntity::toDto)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+    }
+
+    @Override
+    public Page<ProductResponse> getPaginatedProducts(Pageable pageable, List<ProductStatus> statuses) {
+        return productRepository.findAllByStatusIn(pageable, statuses).map(ProductEntity::toDto);
     }
 
     @Override

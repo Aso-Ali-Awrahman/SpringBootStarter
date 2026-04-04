@@ -10,6 +10,8 @@ import com.aso.springstarter.entiies.CustomerEntity;
 import com.aso.springstarter.entiies.UserStatus;
 import com.aso.springstarter.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,11 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findAll().stream()
             .map(CustomerEntity::toDto)
             .toList();
+    }
+
+    @Override
+    public Page<CustomerResponse> getPaginatedCustomers(Pageable pageable, List<UserStatus> statuses) {
+        return customerRepository.findAllByStatusIn(pageable, statuses).map(CustomerEntity::toDto);
     }
 
     @Override

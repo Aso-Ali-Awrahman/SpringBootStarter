@@ -9,10 +9,13 @@ import com.aso.springstarter.dtos.employee.EmployeeResponse;
 import com.aso.springstarter.dtos.employee.UpdateEmployeePassword;
 import com.aso.springstarter.dtos.employee.UpdateEmployeeRequest;
 import com.aso.springstarter.entiies.EmployeeEntity;
+import com.aso.springstarter.entiies.UserRole;
 import com.aso.springstarter.entiies.UserStatus;
 import com.aso.springstarter.repositories.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,6 +31,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll()
             .stream().map(EmployeeEntity::toDto)
             .toList();
+    }
+
+    @Override
+    public Page<EmployeeResponse> getPaginatedEmployees(Pageable pageable, List<UserStatus> statuses, List<UserRole> roles) {
+        return employeeRepository.findAllByStatusInAndRoleIn(pageable, statuses, roles)
+            .map(EmployeeEntity::toDto);
     }
 
     @Override
