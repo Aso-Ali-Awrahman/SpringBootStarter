@@ -77,7 +77,8 @@ public class CustomerServiceImpl implements CustomerService {
             UserStatus.ACTIVE,
             request.getPhoneNumber(),
             request.getGender(),
-            Instant.now()
+            Instant.now(),
+            null
         ));
     }
 

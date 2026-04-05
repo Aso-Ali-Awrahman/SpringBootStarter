@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ProblemDetail;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.org.bouncycastle.crypto.ec.ECEncryptor;
 
 public class CustomerManagementControllerIntegrationTest extends IntegrationTestBase {
 
@@ -239,7 +238,7 @@ public class CustomerManagementControllerIntegrationTest extends IntegrationTest
 
     private CustomerResponse createCustomer() {
         return customerRepository.save(new CustomerEntity(
-            null, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, UserStatus.ACTIVE, PHONE_NUMBER, Gender.MALE, Instant.now()
+            null, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, UserStatus.ACTIVE, PHONE_NUMBER, Gender.MALE, Instant.now(), null
         )).toDto();
     }
 

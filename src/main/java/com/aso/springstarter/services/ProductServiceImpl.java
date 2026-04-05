@@ -59,7 +59,8 @@ public class ProductServiceImpl implements ProductService{
             request.getDescription(),
             request.getPrice(),
             request.getStockQuantity(),
-            ProductStatus.AVAILABLE
+            ProductStatus.AVAILABLE,
+            null
         );
         productRepository.save(product);
         return product.toDto();

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="12-create-order-item-table" author="aso.ali" logicalFilePath="12-create-order-item-table.xml">
+        
+        <createTable schemaName="store" tableName="order_item">
+            <column name="id" type="uuid" defaultValue="uuid_generate_v4()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_id" type="uuid">
+                <constraints references="store.order(id)" nullable="false" foreignKeyName="order_item_order_fk_order_id"/>
+            </column>
+            <column name="product_id" type="uuid">
+                <constraints references="store.product(id)" nullable="false" foreignKeyName="order_item_product_fk_product_id"/>
+            </column>
+            <column name="quantity" type="integer">
+                <constraints checkConstraint="quantity > 0"/>
+            </column>
+            <column name="price" type="numeric(6, 1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="datetime"/>
+            <column name="created_at" type="datetime"/>
+        </createTable>
+
+    </changeSet>
+    
+</databaseChangeLog>
