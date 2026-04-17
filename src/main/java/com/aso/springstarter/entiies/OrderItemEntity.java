@@ -3,6 +3,7 @@ package com.aso.springstarter.entiies;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.aso.springstarter.dtos.order.OrderWithItemsResponse;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -49,5 +50,19 @@ public class OrderItemEntity {
 
     @Column(name = "created_at")
     private Instant createdAt;
+
+    public OrderWithItemsResponse.OrderItemResponse toDto() {
+        return new OrderWithItemsResponse.OrderItemResponse(
+            id,
+            product.getName(),
+            quantity,
+            price,
+            createdAt
+        );
+    }
+
+    public boolean checkQuantityBeforeCompletingOrder() {
+        return product.getStockQuantity() < quantity;
+    }
 
 }
