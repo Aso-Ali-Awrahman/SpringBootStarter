@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.aso.springstarter.entiies.OrderEntity;
 import com.aso.springstarter.entiies.OrderItemEntity;
+import com.aso.springstarter.entiies.OrderStatus;
 import com.aso.springstarter.entiies.ProductStatus;
 import com.aso.springstarter.repositories.OrderItemRepository;
 import com.aso.springstarter.repositories.OrderRepository;
@@ -39,7 +40,9 @@ public class OrderItemServiceImpl implements OrderItemService {
         if (product.get().getStockQuantity() < quantity) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Insufficient stock");
         }
-
+        if (order.getOrderItems().isEmpty()) {
+            order.setStatus(OrderStatus.PENDING);
+        }
         final var orderItem = new OrderItemEntity(
             null,
             order,
@@ -66,10 +69,15 @@ public class OrderItemServiceImpl implements OrderItemService {
         if (item.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Order item not found");
         }
-        orderItemRepository.delete(item.get());
+        order.getOrderItems().remove(item.get());
+        if (order.getOrderItems().isEmpty()) {
+            order.setStatus(OrderStatus.INITIATED);
+        }
+        orderRepository.save(order);
     }
 
     @Override
+    @Transactional
     public void updateItemQuantity(UUID orderId, UUID itemId, UUID userId, int quantity) {
         final var order = getAndValidateOrder(orderId, userId);
         if (order.isNotAvailable()) {

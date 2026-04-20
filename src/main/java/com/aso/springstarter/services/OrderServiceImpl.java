@@ -57,10 +57,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void completeOrder(UUID orderId, UUID userId) {
         final var order = getAndValidateOrder(orderId, userId);
-        if (order.isNotAvailable()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order must be in INITIATED or PENDING to complete");
+        if (order.getStatus() != OrderStatus.PENDING) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order must be in PENDING to complete");
         }
         var totalPrice = 0.0;
         for (var item : order.getOrderItems()) {
@@ -81,6 +82,7 @@ public class OrderServiceImpl implements OrderService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order must be in INITIATED or PENDING state to remove items");
         }
         order.getOrderItems().clear();
+        order.setStatus(OrderStatus.INITIATED);
         orderRepository.save(order);
     }
 
