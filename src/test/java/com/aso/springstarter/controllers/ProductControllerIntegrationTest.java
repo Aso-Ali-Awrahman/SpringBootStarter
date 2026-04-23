@@ -23,9 +23,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
 
+@WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
 public class ProductControllerIntegrationTest extends IntegrationTestBase {
 
     @Autowired
@@ -51,7 +53,8 @@ public class ProductControllerIntegrationTest extends IntegrationTestBase {
             .andReturn();
 
         // then
-        final var response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<ProductResponse>>() {});
+        final var rootNode = objectMapper.readTree(result.getResponse().getContentAsString());
+        final var response = objectMapper.readValue(rootNode.get("content").toString(), new TypeReference<List<ProductResponse>>() {});
         softly.assertThat(response).size().isEqualTo(1);
         softly.assertThat(response.getFirst().getName()).isEqualTo(PRODUCT_NAME);
         softly.assertThat(response.getFirst().getDescription()).isEqualTo(PRODUCT_DESCRIPTION);

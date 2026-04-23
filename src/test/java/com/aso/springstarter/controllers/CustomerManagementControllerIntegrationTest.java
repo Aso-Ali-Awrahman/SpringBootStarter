@@ -21,8 +21,10 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+@WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
 public class CustomerManagementControllerIntegrationTest extends IntegrationTestBase {
 
     @Autowired
@@ -52,7 +54,8 @@ public class CustomerManagementControllerIntegrationTest extends IntegrationTest
             .andReturn();
 
         // then
-        final var customers = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<CustomerResponse>>() {});
+        final var rootNode = objectMapper.readTree(result.getResponse().getContentAsString());
+        final var customers = objectMapper.readValue(rootNode.get("content").toString(), new TypeReference<List<CustomerResponse>>() {});
         softly.assertThat(customers.getFirst().getId()).isEqualTo(customer.getId());
         softly.assertThat(customers.getFirst().getFirstName()).isEqualTo(customer.getFirstName());
         softly.assertThat(customers.getFirst().getLastName()).isEqualTo(customer.getLastName());
@@ -71,7 +74,8 @@ public class CustomerManagementControllerIntegrationTest extends IntegrationTest
             .andReturn();
 
         // then
-        final var customers = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<CustomerResponse>>() {});
+        final var rootNode = objectMapper.readTree(result.getResponse().getContentAsString());
+        final var customers = objectMapper.readValue(rootNode.get("content").toString(), new TypeReference<List<CustomerResponse>>() {});
         softly.assertThat(customers).isEmpty();
     }
 

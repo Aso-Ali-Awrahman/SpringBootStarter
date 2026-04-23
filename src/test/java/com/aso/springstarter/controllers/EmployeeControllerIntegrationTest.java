@@ -27,8 +27,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+@WithMockUser(username = "admin", authorities = {"ROLE_ADMIN"})
 public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
 
     @Autowired
@@ -54,7 +56,8 @@ public class EmployeeControllerIntegrationTest extends IntegrationTestBase {
             .andReturn();
 
         // then
-        final var response = objectMapper.readValue(result.getResponse().getContentAsString(), new TypeReference<List<EmployeeResponse>>() {});
+        final var rootNode = objectMapper.readTree(result.getResponse().getContentAsString());
+        final var response = objectMapper.readValue(rootNode.get("content").toString(), new TypeReference<List<EmployeeResponse>>() {});
         softly.assertThat(response).hasSize(1);
         softly.assertThat(response.getFirst().getId()).isEqualTo(id);
         softly.assertThat(response.getFirst().getFullName()).isEqualTo(FULL_NAME);
