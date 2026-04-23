@@ -11,13 +11,21 @@ ____
 ### Lab A3 - YouTube Channel
 Video: 
 ____
+### Running The Project 
+Before running the project you have to have these:
+- IntelliJ IDE [install](https://www.jetbrains.com/idea/)
+- Java 21 [install](https://www.oracle.com/java/technologies/downloads/#jdk21-windows). YouTube [tutorial](https://youtu.be/-hxCPXjYWJU?si=DZacUnOLoC2vbav2).
+- Docker Desktop (For running postgres DB) [install](https://www.docker.com/products/docker-desktop/).
+- And a laptop to run all of these things ;).
+
+____
 ### Code Solution
 - The `master` branch doesn't have the implementation rather than it is the start of the course.
 - The `SpringStarter` branch has all the implementation. Each commit is a part where I explained it in the video.
    - Along with that I added `docs.md` in that branch, which are the notes for each part.
 ____
 ### Project Overview
-The project that we are building is a store project, where we have two users (backofficeuser, customer). Backofficeuser manage product, and customer orders products from the store.
+The project that we are building is a store project, where we have two users (employee, customer). Employees manage products, and customers orders products from the store.
 - We also implemented Spring Security for authenticating user and authorization on each endpoints based on the role.
 - Explained testing briefly in general, however the method didn't work for Spring-Boot version 4 :(
 - Explained pagination and sorting.
@@ -81,13 +89,6 @@ erDiagram
         date created_at
     }
 ```
-____
-### Running The Project 
-Before running the project you have to have these:
-- IntelliJ IDE.
-- Java 21
-- Docker Desktop (For running postgres DB)
-- And a laptop to run all of these things ;).
-- Also don't forget about your mind, becuase it might not work on your machine!
+
 
 
