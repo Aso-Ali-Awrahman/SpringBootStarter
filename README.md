@@ -9,10 +9,10 @@ This course explains building a (backend) project using Spring-Boot framework, i
 
 ____
 ### Lab A3 - YouTube Channel
-Video: 
+Video: https://www.youtube.com/watch?v=IUpcreuS8jY
 ____
-### Running The Project 
-Before running the project you have to have these:
+### Clone the repo on master branch using `git`
+Before running the project locally, you have to have these:
 - IntelliJ IDE [install](https://www.jetbrains.com/idea/)
 - Java 21 [install](https://www.oracle.com/java/technologies/downloads/#jdk21-windows). YouTube [tutorial](https://youtu.be/-hxCPXjYWJU?si=DZacUnOLoC2vbav2).
 - Docker Desktop (For running postgres DB) [install](https://www.docker.com/products/docker-desktop/).
